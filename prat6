@@ -1,0 +1,44 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import java.io.*;
+import jxl.*;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+
+public class stqa6 {
+    public static void main(String[] args) {
+        try {
+            String inputFile = "E:\\printout\\stqa\\test.xls";
+            String outputFile = "E:\\printout\\stqa\\AI.xls";
+            int passingPercentage = 60;
+            Workbook workbook = Workbook.getWorkbook(new FileInputStream(inputFile));
+            Sheet sheet = workbook.getSheet(0);
+            WritableWorkbook writableWorkbook = Workbook.createWorkbook(new FileOutputStream(outputFile));
+            WritableSheet writableSheet = writableWorkbook.createSheet("result1", 0);
+            int studentsPassed = 0;
+            for (int i = 2; i < sheet.getRows(); i++) {
+                Cell[] rowCells = sheet.getRow(i);
+                double totalPercentage = 0;
+                for (int j = 0; j < sheet.getColumns(); j++) {
+                    totalPercentage += Integer.parseInt(rowCells[j].getContents()); }
+                totalPercentage = (totalPercentage / 500.0) * 100;
+                if (totalPercentage >= passingPercentage) {
+                    studentsPassed++;
+                    for (int j = 0; j < sheet.getColumns(); j++) {
+                        String cellValue = (j == sheet.getColumns() - 1) ? "Pass" : rowCells[j].getContents();
+                        writableSheet.addCell(new Label(j, i - 2, cellValue));
+                    }
+                }}
+writableWorkbook.write(); writableWorkbook.close(); workbook.close();
+System.out.println("Passed: " + studentsPassed + " out of " + (sheet.getRows() - 2));
+} catch (Exception e) { e.printStackTrace(); }
+}
+}
