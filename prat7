@@ -1,0 +1,29 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+
+public class staq7 {
+
+static String driverpath = "E:\\printout\\stqa\\geckodriver.exe"; 
+public static WebDriver driver;
+
+public static void main(String[] args) {
+// TODO code application logic here
+System.setProperty("webdriver.gecko.driver", driverpath);
+FirefoxOptions options = new FirefoxOptions();
+options.setCapability("marionette", true);
+driver = new FirefoxDriver(options);
+driver.get("https://www.google.com");
+
+// Find all elements on the webpage
+java.util.List<WebElement> allElements = driver.findElements(By.xpath("//*"));
+
+// Print the total number of elements
+System.out.println("Total number of objects on the webpage: " + allElements.size());
+
+driver.quit();
+}
+}
